@@ -167,7 +167,7 @@ function startCountdown() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
-            $countdownEl.textContent = "Fin del tiempo, ganan los inocentes.";
+            $countdownEl.textContent = "Fin del tiempo, gana el espía.";
             return;
         }
 
