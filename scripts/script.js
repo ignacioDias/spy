@@ -124,7 +124,7 @@ $form.addEventListener("submit", function (event) {
 
 function nextPlayer() {
     $h1CurrentPlayer.innerHTML = SPY === currentPlayer ? `Jugador ${currentPlayer}. Te tocó ser el <strong>Espía</strong>`
-                                                    : `Jugador ${currentPlayer}. El juego es: <strong>${randomGame}<strong>`;    
+                                                    : `Jugador ${currentPlayer}. El juego es: <strong>${randomGame}</strong>`;    
     $pCurrentPlayer.textContent = "Dale a Aceptar y pasa la pantalla al siguiente jugador."
     $nextButton.textContent = "Aceptar"
     currentPlayer++;
