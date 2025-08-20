@@ -104,18 +104,73 @@ const videoGames = [
   "Resident Evil Village",
   "Metroid Dread"
 ];
+const animeList = [
+  // Classics
+  "Dragon Ball",
+  "Naruto",
+  "One Piece",
+  "Bleach",
+  "Yu Yu Hakusho",
+  "Sailor Moon",
+  "Saint Seiya (Knights of the Zodiac)",
+  "Neon Genesis Evangelion",
+  "Cowboy Bebop",
+  "Inuyasha",
+  "Pokémon",
+  "Digimon Adventure",
+  "Fullmetal Alchemist",
+  "Death Note",
+  "Code Geass",
 
-const randomGame = videoGames[Math.floor(Math.random() * videoGames.length)];
+  // Newer & Popular
+  "Attack on Titan",
+  "My Hero Academia",
+  "Kimetsu no Yaiba (Demon Slayer)",
+  "Jujutsu Kaisen",
+  "Tokyo Revengers",
+  "Black Clover",
+  "Dr. Stone",
+  "Chainsaw Man",
+  "Blue Lock",
+  "Spy x Family",
+  "The Seven Deadly Sins",
+  "Fire Force",
+  "Re:Zero",
+  "Sword Art Online",
+
+  // Sports
+  "Haikyuu!!",
+  "Captain Tsubasa / Supercampeones",
+  "Hajime no Ippo",
+
+
+  // Big franchises / Modern epics
+  "Boruto: Naruto Next Generations",
+  "Fairy Tail",
+  "Hunter x Hunter",
+  "JoJo’s Bizarre Adventure",
+  "One Punch Man",
+  "Mob Psycho 100",
+  "Parasyte",
+  "Overlord"
+];
+
+let randomElement;
 let currentPlayer = 1;
 let currentIteration = 1;
-
+let category;
 $form.addEventListener("submit", function (event) {
     event.preventDefault();
     
     PLAYERS = parseInt(document.getElementById("players").value, 10);
     minutes = parseInt(document.getElementById("minutes").value, 10);
     SPY = Math.floor(Math.random() * PLAYERS) + 1;
-
+    category = document.getElementById("category").value;
+    if(category == "videogames") {
+        randomElement = videoGames[Math.floor(Math.random() * videoGames.length)];
+    } else {
+        randomElement = animeList[Math.floor(Math.random() * animeList.length)];
+    }
     $gameDiv.style.display = "block";    
     $form.style.display = "none";
 
@@ -124,7 +179,7 @@ $form.addEventListener("submit", function (event) {
 
 function nextPlayer() {
     $h1CurrentPlayer.innerHTML = SPY === currentPlayer ? `Jugador ${currentPlayer}. Te tocó ser el <strong style="color:rgb(185, 32, 32);">Espía</strong>`
-                                                    : `Jugador ${currentPlayer}. El juego es: <strong>${randomGame}</strong>`;    
+                                                    : `Jugador ${currentPlayer}. El ${(category == "animes") ? "anime" : "juego"} es: <strong>${randomElement}</strong>`;    
     $pCurrentPlayer.textContent = "Dale a Aceptar y pasa la pantalla al siguiente jugador."
     $nextButton.textContent = "Aceptar"
     currentPlayer++;
@@ -137,7 +192,7 @@ $nextButton.addEventListener("click", () => {
     }
     if(currentPlayer > PLAYERS) {
         $h1CurrentPlayer.textContent = "Todos los roles asignados"
-        $pCurrentPlayer.textContent = "Si el espía adivina el juego y lo dice en voz alta, gana la partida. Si se equivoca o lo descubren, pierde."
+        $pCurrentPlayer.textContent = `Si el espía adivina el ${(category == "animes") ? "anime" : "juego"} y lo dice en voz alta, gana la partida. Si se equivoca o lo descubren, pierde.`;
         $nextButton.classList.add("green-btn");
         $nextButton.textContent = "Espía descubierto"
         finished = true;
