@@ -164,15 +164,15 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* Quitar flechas en Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
 .settings h1,
 #game h1, #countdown {
   color: #fff;
 }
+
+.title-center {
+  text-align: center;
+}
+
 .green-btn {
     background-color: rgb(67, 219, 67);
     box-shadow: 0 6px 16px rgba(255, 255, 255, 0.35); /* green shadow */
