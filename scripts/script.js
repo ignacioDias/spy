@@ -5,10 +5,12 @@ const $pCurrentPlayer = document.querySelector(".p-rol");
 const $nextButton = document.querySelector(".next");
 
 let PLAYERS = 0;
-let SPY = -1;
+let SPIES = [];
 let minutes = 2;
 let word = "null";
-const videoGames = [
+let spies = 0;
+
+const VIDEO_GAMES = [
   // 80s Classics
   "Pac-Man",
   "Donkey Kong",
@@ -104,7 +106,7 @@ const videoGames = [
   "Resident Evil Village",
   "Metroid Dread"
 ];
-const animeList = [
+const ANIMES = [
   // Classics
   "Dragon Ball",
   "Naruto",
@@ -154,7 +156,7 @@ const animeList = [
   "Parasyte",
   "Overlord"
 ];
-const footballPlayers = [
+const FOOTBALL_PLAYERS = [
   "Lionel Messi",
   "Cristiano Ronaldo",
   "Kylian Mbappé",
@@ -234,7 +236,7 @@ const footballPlayers = [
   "Robinho",
   "Kaká",
 ];
-const footballTeams = [
+const FOOTBALL_TEAMS = [
   "Real Madrid",
   "FC Barcelona",
   "Atlético Madrid",
@@ -299,7 +301,7 @@ const footballTeams = [
   "Millonarios (Colombia)",
 
 ];
-const movies = [
+const MOVIES = [
   // Clásicos
   "El Padrino",
   "Scarface: Cara Cortada",
@@ -378,6 +380,165 @@ const movies = [
   "Antes del Anochecer",
   "Antes del Atardecer"
 ];
+const RANDOM_WORDS = [
+  "Árbol",
+  "Montaña",
+  "Río",
+  "Playa",
+  "Bosque",
+  "Desierto",
+  "Volcán",
+  "Océano",
+  "Lago",
+  "Isla",
+  "Casa",
+  "Edificio",
+  "Puente",
+  "Castillo",
+  "Torre",
+  "Biblioteca",
+  "Hospital",
+  "Escuela",
+  "Universidad",
+  "Mercado",
+  "Restaurante",
+  "Hotel",
+  "Aeropuerto",
+  "Estación",
+  "Museo",
+  "Teatro",
+  "Cine",
+  "Parque",
+  "Jardín",
+  "Plaza",
+  "Perro",
+  "Gato",
+  "Caballo",
+  "Elefante",
+  "León",
+  "Tigre",
+  "Oso",
+  "Lobo",
+  "Zorro",
+  "Conejo",
+  "Pájaro",
+  "Águila",
+  "Ballena",
+  "Delfín",
+  "Tiburón",
+  "Serpiente",
+  "Tortuga",
+  "Mariposa",
+  "Abeja",
+  "Hormiga",
+  "Libro",
+  "Cuaderno",
+  "Lápiz",
+  "Mesa",
+  "Silla",
+  "Cama",
+  "Almohada",
+  "Ventana",
+  "Puerta",
+  "Espejo",
+  "Reloj",
+  "Teléfono",
+  "Computadora",
+  "Teclado",
+  "Ratón",
+  "Pantalla",
+  "Cámara",
+  "Micrófono",
+  "Lámpara",
+  "Vela",
+  "Guitarra",
+  "Piano",
+  "Violín",
+  "Tambor",
+  "Flauta",
+  "Trompeta",
+  "Pintura",
+  "Escultura",
+  "Dibujo",
+  "Fotografía",
+  "Pan",
+  "Leche",
+  "Queso",
+  "Mantequilla",
+  "Huevo",
+  "Carne",
+  "Pescado",
+  "Pollo",
+  "Arroz",
+  "Pasta",
+  "Sopa",
+  "Ensalada",
+  "Fruta",
+  "Manzana",
+  "Naranja",
+  "Plátano",
+  "Uva",
+  "Fresa",
+  "Sandía",
+  "Melón",
+  "Verdura",
+  "Zanahoria",
+  "Tomate",
+  "Lechuga",
+  "Cebolla",
+  "Ajo",
+  "Papa",
+  "Café",
+  "Té",
+  "Agua",
+  "Jugo",
+  "Vino",
+  "Cerveza",
+  "Chocolate",
+  "Galleta",
+  "Pastel",
+  "Helado",
+  "Camisa",
+  "Pantalón",
+  "Vestido",
+  "Zapato",
+  "Sombrero",
+  "Guante",
+  "Bufanda",
+  "Abrigo",
+  "Chaqueta",
+  "Corbata",
+  "Cinturón",
+  "Bolso",
+  "Mochila",
+  "Maleta",
+  "Paraguas",
+  "Gafas",
+  "Reloj",
+  "Anillo",
+  "Collar",
+  "Pulsera",
+  "Sol",
+  "Luna",
+  "Estrella",
+  "Nube",
+  "Lluvia",
+  "Nieve",
+  "Viento",
+  "Tormenta",
+  "Arcoíris",
+  "Relámpago",
+  "Trueno",
+  "Tierra",
+  "Fuego",
+  "Aire",
+  "Piedra",
+  "Arena",
+  "Oro",
+  "Plata",
+  "Diamante",
+  "Cristal"
+]
 
 let randomElement;
 let currentPlayer = 1;
@@ -390,29 +551,43 @@ $form.addEventListener("submit", function (event) {
     event.preventDefault();
     
     PLAYERS = parseInt(document.getElementById("players").value, 10);
+    spies = parseInt(document.getElementById("spies").value, 10);
     minutes = parseInt(document.getElementById("minutes").value, 10);
-    SPY = Math.floor(Math.random() * PLAYERS) + 1;
+    
+    // Select multiple spies randomly
+    SPIES = [];
+    while (SPIES.length < spies) {
+        const randomSpy = Math.floor(Math.random() * PLAYERS) + 1;
+        if (!SPIES.includes(randomSpy)) {
+            SPIES.push(randomSpy);
+        }
+    }
+    
     category = document.getElementById("category").value;
     switch (category) {
         case "videogames":
-            randomElement = pickRandom(videoGames);
+            randomElement = pickRandom(VIDEO_GAMES);
             word = "juego";
             break;
         case "animes":
-            randomElement = pickRandom(animeList);
+            randomElement = pickRandom(ANIMES);
             word = "anime";
             break;
         case "movies":
-            randomElement = pickRandom(movies);
+            randomElement = pickRandom(MOVIES);
             word = "película";
             break;
         case "football-players":
-            randomElement = pickRandom(footballPlayers);
+            randomElement = pickRandom(FOOTBALL_PLAYERS);
             word = "jugador";
             break;
         case "football-teams":
-            randomElement = pickRandom(footballTeams);
+            randomElement = pickRandom(FOOTBALL_TEAMS);
             word = "equipo";
+            break;
+        case "random-words":
+            randomElement = pickRandom(RANDOM_WORDS);
+            word = "palabra";
             break;
         default:
             randomElement = null;
@@ -428,8 +603,8 @@ $form.addEventListener("submit", function (event) {
 });
 
 function nextPlayer() {
-    $h1CurrentPlayer.innerHTML = SPY === currentPlayer ? `Jugador ${currentPlayer}. Te tocó ser el <strong style="color:rgb(185, 32, 32);">Espía</strong>`
-                                                    : `Jugador ${currentPlayer}. ${word == "película" ? "La" : "El"} ${word} es: <strong>${randomElement}</strong>`;    
+    $h1CurrentPlayer.innerHTML = SPIES.includes(currentPlayer) ? `Jugador ${currentPlayer}. Te tocó ser el <strong style="color:rgb(185, 32, 32);">Espía</strong>`
+                                                    : `Jugador ${currentPlayer}. ${word == "película" || word == "palabra" ? "La" : "El"} ${word} es: <strong>${randomElement}</strong>`;    
     $pCurrentPlayer.textContent = "Dale a Aceptar y pasa la pantalla al siguiente jugador."
     $nextButton.textContent = "Aceptar"
     currentPlayer++;
@@ -442,9 +617,11 @@ $nextButton.addEventListener("click", () => {
     }
     if(currentPlayer > PLAYERS) {
         $h1CurrentPlayer.textContent = "Todos los roles asignados"
-        $pCurrentPlayer.textContent = `Si el espía adivina ${word == "película" ? "la" : "el"} ${word} y ${word == "película" ? "la" : "lo"} dice en voz alta, gana la partida. Si se equivoca o lo descubren, pierde.`;
+        const spyText = spies > 1 ? "los espías adivinan" : "el espía adivina";
+        const spyText2 = spies > 1 ? "se equivocan o los descubren" : "se equivoca o lo descubren";
+        $pCurrentPlayer.textContent = `Si ${spyText} ${word == "película" || word == "palabra" ? "la" : "el"} ${word} y ${word == "película" ? "la" : "lo"} ${spies > 1 ? "dicen" : "dice"} en voz alta, ${spies > 1 ? "ganan" : "gana"} la partida. Si ${spyText2}, ${spies > 1 ? "pierden" : "pierde"}.`;
         $nextButton.classList.add("green-btn");
-        $nextButton.textContent = "Espía descubierto"
+        $nextButton.textContent = spies > 1 ? "Espías descubiertos" : "Espía descubierto"
         finished = true;
         startCountdown();
         return;
@@ -472,7 +649,7 @@ function startCountdown() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
-            $countdownEl.textContent = "Fin del tiempo, gana el espía.";
+            $countdownEl.textContent = spies > 1 ? "Fin del tiempo, ganan los espías." : "Fin del tiempo, gana el espía.";
             return;
         }
 
