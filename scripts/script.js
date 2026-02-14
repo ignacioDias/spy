@@ -7,6 +7,7 @@ import {
     RANDOM_WORDS 
 } from './constants.js';
 
+
 const $form = document.getElementById("settingsForm");
 const $gameDiv = document.getElementById("game");
 const $h1CurrentPlayer = document.querySelector(".player-rol");
