@@ -1,47 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spy</title>
-    <link rel="stylesheet" type="text/css" href="style/style.css">   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f0f12">
+    <meta name="color-scheme" content="dark">
+    <title>El Espía · Juego de palabras para jugar en grupo</title>
+    <meta name="description" content="Juega El Espía con amigos: todos conocen la palabra secreta menos uno. Elige categoría, cantidad de jugadores y duración. Rondas rápidas y gratis.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Ignacio Dias">
+    <link rel="canonical" href="https://ignaciodias.github.io/spy-videogames/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="El Espía">
+    <meta property="og:title" content="El Espía · Juego de palabras para jugar en grupo">
+    <meta property="og:description" content="Todos conocen la palabra secreta… menos uno. Descubre al espía en rondas rápidas con amigos.">
+    <meta property="og:url" content="https://ignaciodias.github.io/spy-videogames/">
+    <meta property="og:image" content="https://ignaciodias.github.io/spy-videogames/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="El Espía, juego de palabras para jugar en grupo">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="El Espía · Juego de palabras para jugar en grupo">
+    <meta name="twitter:description" content="Todos conocen la palabra secreta… menos uno. Descubre al espía en rondas rápidas con amigos.">
+    <meta name="twitter:image" content="https://ignaciodias.github.io/spy-videogames/og-image.png">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "El Espía",
+      "url": "https://ignaciodias.github.io/spy-videogames/",
+      "description": "Juego de palabras para jugar en grupo: todos conocen la palabra secreta menos el espía. Incluye categorías de videojuegos, anime, películas, series, deportes y más.",
+      "inLanguage": "es",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "ARS"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Ignacio Dias"
+      }
+    }
+    </script>
 </head>
-<body style="background-color: #1a1b1f;">
-    <form class="settings" id="settingsForm">
-        <h1>El Espía</h1>
+<body>
+    <main class="app">
+        <form class="card settings" id="settingsForm" novalidate>
+            <header class="brand">
+                <span class="brand-mark" aria-hidden="true">ESPÍA</span>
+                <h1>El Espía</h1>
+                <p class="subtitle">Todos conocen la palabra secreta… menos uno.</p>
+            </header>
 
-        <label for="minutes">Duración</label>
-        <input type="number" id="minutes" min="1" required>
-        
-        <label for="players">Cantidad de Jugadores</label>
-        <select id="players" name="players">
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-        </select>
-        <label for="category">Categorías</label>
-        <select id="category" name="category">
-            <option value="videogames">Videojuegos</option>
-            <option value="animes">Animes</option>
-            <option value="movies">Películas</option>
-            <option value="football-players">Jugadores de Fútbol</option>
-            <option value="football-teams">Equipos de Fútbol</option>
-        </select>
+            <div class="field">
+                <label for="minutes">Duración de la ronda (minutos)</label>
+                <input type="number" id="minutes" name="minutes" min="1" max="60" value="2" inputmode="numeric" required>
+            </div>
 
-        <button class="start" type="submit">Comenzar</button>
-    </form>
+            <div class="field">
+                <label for="players">Cantidad de jugadores</label>
+                <select id="players" name="players">
+                    <option value="3">3 jugadores</option>
+                    <option value="4">4 jugadores</option>
+                    <option value="5">5 jugadores</option>
+                    <option value="6">6 jugadores</option>
+                    <option value="7">7 jugadores</option>
+                    <option value="8">8 jugadores</option>
+                    <option value="9">9 jugadores</option>
+                    <option value="10">10 jugadores</option>
+                    <option value="11">11 jugadores</option>
+                    <option value="12">12 jugadores</option>
+                </select>
+            </div>
 
-    <div id="game" style="display: none;">
-        <h1 class="player-rol"></h1>
-        <br>
-        <p class="p-rol"></p>
-        <button class="next"></button>
-    </div>
-    <h1 style="display: none;" id="countdown"></h1>
-    <script src="scripts/script.js"></script>
+            <div class="field">
+                <label for="category">Categoría</label>
+                <select id="category" name="category">
+                    <optgroup label="Entretenimiento">
+                        <option value="videogames">Videojuegos</option>
+                        <option value="animes">Animes</option>
+                        <option value="movies">Películas</option>
+                        <option value="series">Series</option>
+                        <option value="music">Música</option>
+                        <option value="books">Libros</option>
+                        <option value="superheroes">Superhéroes</option>
+                    </optgroup>
+                    <optgroup label="Deportes">
+                        <option value="football-players">Jugadores de Fútbol</option>
+                        <option value="football-teams">Equipos de Fútbol</option>
+                        <option value="sports">Deportes</option>
+                    </optgroup>
+                    <optgroup label="Mundo y cultura">
+                        <option value="places">Países y Ciudades</option>
+                        <option value="animals">Animales</option>
+                        <option value="food">Comidas y Bebidas</option>
+                        <option value="professions">Profesiones</option>
+                        <option value="brands">Marcas</option>
+                    </optgroup>
+                    <optgroup label="General">
+                        <option value="objects">Objetos Cotidianos</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <button class="btn btn-primary start" type="submit">Comenzar</button>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+        </form>
+
+        <section id="game" class="card game" hidden>
+            <div class="game-top">
+                <span class="pill" id="playerPill"></span>
+                <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+            </div>
+
+            <div class="role" id="roleCard" aria-live="polite">
+                <p class="role-kicker" id="roleKicker"></p>
+                <h2 class="role-title" id="roleTitle"></h2>
+                <p class="role-text" id="roleText"></p>
+            </div>
+
+            <button class="btn btn-primary next" id="gameBtn" type="button">Ver mi rol</button>
+        </section>
+
+        <section id="timer" class="card timer" hidden>
+            <p class="timer-label" id="timerLabel">Tiempo restante</p>
+            <div class="timer-value" id="countdown">02:00</div>
+            <div class="timer-track" aria-hidden="true"><span id="timerBar"></span></div>
+            <p class="timer-hint" id="timerHint">Debatan, hagan preguntas y descubran al espía.</p>
+            <button class="btn btn-ghost" id="restartBtn" type="button">Nueva partida</button>
+        </section>
+    </main>
+
+    <noscript>
+        <p class="noscript">Este juego necesita JavaScript para funcionar. Activalo en tu navegador y recargá la página.</p>
+    </noscript>
+
+    <script src="scripts/script.js" defer></script>
 </body>
 </html>
